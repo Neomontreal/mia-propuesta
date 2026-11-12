@@ -4,445 +4,343 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Propuesta de NEO para MIA: lanzamiento y operación mensual.">
-<meta property="og:title" content="Propuesta MIA · NEO">
-<meta property="og:description" content="Del brief a la noche: lanzamiento y operación mensual.">
-<meta property="og:image" content="https://neomontreal.github.io/mia-propuesta/img/portada.jpg">
-<link rel="icon" href="data:,">
 <title>Propuesta MIA</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Propuesta de NEO para MIA: de las 17 h a las 3 h.">
+<meta property="og:title" content="Propuesta MIA · NEO">
+<meta property="og:description" content="Una noche, de las 17 h a las 3 h. Así abrimos MIA.">
+<meta property="og:image" content="https://neomontreal.github.io/mia-propuesta/img/portada.jpg">
+<meta name="theme-color" content="#0b0908">
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@300;400;500;600&display=swap">
 <style>
-/* Layout: una noche de arriba abajo. Cobre (Relic) domina; el rosa (Pulse) se gana con el scroll y solo aparece pleno al final. */
+/* Una noche de 17 h a 3 h: el reloj avanza con el scroll y el dorado se va volviendo rosa, como dijo Mauricio. */
 :root {
-  --dark: #0b0908;
-  --dark-2: #15110e;
-  --ink: #efe3d3;
-  --muted: #a8988a;
-  --relic: #cf9a72;
-  --pulse: #e2366f;
-  --line: rgba(207, 154, 114, .22);
-  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --bg: #0b0908;
+  --ink: #f0e5d6;
+  --muted: #a3958a;
+  --gold: #c9a45c;
+  --pink: #e2366f;
+  --heat: 0;
+  --accent: color-mix(in oklab, var(--gold), var(--pink) calc(var(--heat) * 100%));
+  --line: color-mix(in oklab, var(--accent) 28%, transparent);
+  --display: "Cormorant Garamond", Georgia, serif;
   --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --p: 0;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
-  margin: 0; background: var(--dark); color: var(--ink);
-  font: 400 17px/1.65 var(--body);
-  -webkit-font-smoothing: antialiased;
+  margin: 0; color: var(--ink); background: var(--bg);
+  font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased;
 }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--dark); }
-.wrap {
-  max-width: 1120px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+.glow {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(70% 55% at 85% 105%, color-mix(in oklab, var(--accent) calc(12% + var(--heat) * 30%), transparent), transparent 70%),
+    radial-gradient(50% 40% at 0% 0%, color-mix(in oklab, var(--gold) 10%, transparent), transparent 70%);
 }
-section { padding-block: clamp(72px, 11vw, 140px); border-top: 1px solid var(--line); }
-img { display: block; max-width: 100%; height: auto; }
-h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.04; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
-h2 { font-size: clamp(38px, 6vw, 68px); }
-h3 { font-size: clamp(26px, 3vw, 32px); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1.02; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h2 { font-size: clamp(38px, 6.4vw, 72px); }
+h2 em, h1 em { color: var(--accent); }
 p { margin: 0; }
-.eyebrow { font: 600 12px/1.2 var(--body); letter-spacing: .22em; text-transform: uppercase; color: var(--relic); }
-.lead { font-size: clamp(19px, 2vw, 22px); line-height: 1.55; max-width: 34em; color: var(--ink); }
+.eyebrow { font: 600 12px/1.2 var(--body); letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
 .muted { color: var(--muted); }
-em, .q { font-family: var(--display); font-style: italic; font-weight: 500; }
-.stack { display: grid; gap: 22px; }
-.head { display: grid; gap: 22px; max-width: 760px; margin-bottom: clamp(40px, 6vw, 72px); }
 
-/* Pulse: línea fija en el borde derecho que pasa de cobre a rosa con el avance de la lectura */
-.pulse-line {
-  position: fixed; top: 0; bottom: 0; right: env(safe-area-inset-right, 0px); width: 3px; z-index: 5; pointer-events: none;
-  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--relic), var(--pulse) calc(var(--p) * 100%)) 50%, transparent);
-  opacity: calc(.35 + var(--p) * .55);
-  filter: blur(.4px);
+/* reloj fijo */
+.clock {
+  position: fixed; z-index: 20; top: calc(14px + env(safe-area-inset-top)); right: max(16px, env(safe-area-inset-right));
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px 8px 12px; border: 1px solid var(--line); border-radius: 999px;
+  background: color-mix(in oklab, var(--bg) 80%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  font: 500 15px/1 var(--body); font-variant-numeric: tabular-nums; letter-spacing: .04em;
 }
+.clock i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 calc(4px + var(--heat) * 14px) var(--accent); animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat { 50% { transform: scale(.6); opacity: .6; } }
+.clock small { color: var(--muted); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
 
-/* Hero */
-.hero { padding-block: clamp(36px, 7vw, 80px) clamp(64px, 9vw, 120px); border-top: 0; }
-.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 72px); align-items: end; }
-.hero-text { display: grid; gap: 26px; min-width: 0; }
-.hero h1 { font-size: clamp(50px, 8.4vw, 112px); }
-.hero h1 em { color: var(--relic); }
-.meta { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 14px; color: var(--muted); padding-top: 22px; border-top: 1px solid var(--line); }
-.meta b { color: var(--ink); font-weight: 500; }
-.hero figure { margin: 0; position: relative; }
-.hero figure img { aspect-ratio: 1200/1290; object-fit: cover; width: 100%; }
-figcaption { font-size: 12px; letter-spacing: .06em; color: var(--muted); margin-top: 10px; }
+/* portada */
+.hero { min-height: min(92vh, 820px); display: grid; align-items: end; position: relative; overflow: hidden; padding-block: 120px 56px; }
+.hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; opacity: .55; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--bg) 8%, transparent 60%), linear-gradient(to right, var(--bg) 0%, transparent 70%); }
+.hero .wrap { position: relative; z-index: 1; display: grid; gap: 22px; width: 100%; }
+.hero h1 { font-size: clamp(54px, 10vw, 128px); max-width: 9em; }
+.hero p.lead { font-size: clamp(18px, 2vw, 21px); max-width: 30em; }
+.scroll-hint { font-size: 13px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; display: flex; gap: 10px; align-items: center; }
+.scroll-hint::after { content: ""; width: 40px; height: 1px; background: var(--accent); animation: slide 2s ease-in-out infinite; transform-origin: left; }
+@keyframes slide { 0% { transform: scaleX(.2); } 50% { transform: scaleX(1); } 100% { transform: scaleX(.2); } }
 
-/* Lo que ya tienen */
-.locked { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.locked > div { background: var(--dark); padding: 28px 26px 30px; display: grid; gap: 12px; align-content: start; }
-.locked .q { font-size: 25px; line-height: 1.15; color: var(--ink); }
-.locked p.muted { font-size: 15px; }
-.wide-img { margin-top: clamp(40px, 6vw, 64px); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.wide-img figure { margin: 0; min-width: 0; }
+/* horas */
+.hour { padding-block: clamp(80px, 12vw, 150px); border-top: 1px solid var(--line); }
+.hour-head { display: grid; gap: 16px; margin-bottom: clamp(36px, 5vw, 56px); max-width: 720px; }
+.hour-head .time { font: 500 clamp(64px, 11vw, 120px)/.85 var(--display); color: var(--accent); }
 
-/* Brecha: hoy vs. imaginado */
-.gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.compare figure { margin: 0; min-width: 0; }
-.compare img { aspect-ratio: 3/4; object-fit: cover; width: 100%; }
-.tag { display: inline-block; font: 600 11px/1 var(--body); letter-spacing: .18em; text-transform: uppercase; padding: 7px 9px; border: 1px solid var(--line); color: var(--relic); margin-bottom: 10px; }
-ol.gaps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: g; }
-ol.gaps li { counter-increment: g; display: grid; grid-template-columns: 44px 1fr; gap: 6px 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }
-ol.gaps li::before { content: counter(g); font: 500 30px/1 var(--display); color: var(--relic); grid-row: span 2; }
-ol.gaps b { font-weight: 600; }
-ol.gaps span { color: var(--muted); font-size: 15.5px; }
-.note { margin-top: 28px; padding: 22px 24px; border: 1px solid var(--line); background: var(--dark-2); font-size: 15.5px; }
-.note b { color: var(--relic); font-weight: 600; }
-
-/* Filtro */
-.filter { text-align: left; display: grid; gap: 26px; }
-.filter .big { font: 500 clamp(40px, 7vw, 84px)/1 var(--display); }
-.filter .big em { color: var(--relic); }
-.hier { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; font: 600 13px/1 var(--body); letter-spacing: .16em; text-transform: uppercase; }
-.hier i { font-style: normal; color: var(--muted); }
-
-/* Fases */
-.phase-head { display: grid; grid-template-columns: auto 1fr; gap: 10px 28px; align-items: end; margin-bottom: clamp(36px, 5vw, 56px); }
-.phase-num { font: 500 clamp(80px, 13vw, 160px)/.8 var(--display); color: var(--relic); }
-.phase-head .stack { gap: 14px; max-width: 640px; }
-.deliv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; }
-.item { padding: 26px 0 28px; border-top: 1px solid var(--line); display: grid; gap: 12px; min-width: 0; }
-.item h3 { display: flex; gap: 14px; align-items: baseline; }
-.item h3 small { font: 600 12px/1 var(--body); letter-spacing: .14em; color: var(--relic); }
-.item ul { margin: 0; padding: 0 0 0 18px; display: grid; gap: 7px; color: var(--muted); font-size: 15.5px; }
-.item ul li::marker { color: var(--relic); }
-.item .why { font-size: 14.5px; color: var(--ink); opacity: .85; }
-.item .why em { color: var(--relic); }
-
-/* Campaña: los 3 movimientos */
-.moves { margin-top: clamp(48px, 7vw, 80px); }
-.moves figure { margin: 0 0 28px; }
-.moves-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.moves-grid > div { display: grid; gap: 10px; align-content: start; }
-.moves-grid .eyebrow:nth-child(1) { color: var(--relic); }
-.m2 .eyebrow { color: color-mix(in oklab, var(--relic), var(--pulse) 50%); }
-.m3 .eyebrow { color: var(--pulse); }
-
-/* Calendario */
-.timeline { list-style: none; margin: 0; padding: 0; display: grid; }
-.timeline li { display: grid; grid-template-columns: 170px 1fr; gap: 6px 32px; padding: 22px 0; border-top: 1px solid var(--line); }
-.timeline .when { font: 600 13px/1.4 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--relic); }
-.timeline .when small { display: block; font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--muted); font-size: 13px; margin-top: 4px; }
-.timeline b { font-weight: 600; display: block; margin-bottom: 4px; }
-.timeline span { color: var(--muted); font-size: 15.5px; }
-.timeline li.hot .when { color: var(--pulse); }
-
-/* Necesitamos */
-.needs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; list-style: none; padding: 0; margin: 0; }
-.needs li { padding: 16px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 22px 1fr; gap: 12px; font-size: 16px; }
-.needs li::before { content: ""; width: 9px; height: 9px; border: 1px solid var(--relic); border-radius: 50%; margin-top: 8px; }
-.needs span { color: var(--muted); font-size: 14.5px; display: block; }
-
-/* Cierre: aquí el Pulse se gana */
-.close { position: relative; overflow: hidden; }
-.close::after {
-  content: ""; position: absolute; inset: auto 0 0 0; height: 70%; pointer-events: none;
-  background: radial-gradient(60% 80% at 80% 100%, rgba(226, 54, 111, .28), transparent 70%);
+/* 17 h · nos dijeron → hacemos */
+.pairs { display: grid; gap: 12px; }
+.pair {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: center;
+  padding: 22px 24px; border: 1px solid var(--line); border-radius: 4px;
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  transition: border-color .3s, transform .3s;
 }
-.close-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(28px, 5vw, 64px); align-items: end; }
-.close h2 em { color: var(--pulse); }
-.invest { border: 1px solid var(--line); padding: 26px; display: grid; gap: 12px; background: rgba(11, 9, 8, .6); }
-.invest .row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
-.invest .row span:last-child { color: var(--muted); text-align: right; }
-.close figure { margin: 0; }
-.close figure img { aspect-ratio: 3/4; object-fit: cover; width: 100%; max-width: 360px; margin-left: auto; }
-footer { padding-block: 34px 44px; border-top: 1px solid var(--line); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 300; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.pair:hover { border-color: var(--accent); transform: translateX(4px); }
+.pair .said { font: italic 500 clamp(21px, 2.4vw, 26px)/1.2 var(--display); }
+.pair .said small { display: block; font: 400 12px/1.4 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-style: normal; margin-top: 6px; }
+.pair .arrow { color: var(--accent); font-size: 20px; }
+.pair .do { font-size: 15.5px; }
+.pair .do b { font-weight: 600; display: block; margin-bottom: 2px; color: var(--ink); }
+.pair .do span { color: var(--muted); }
 
-a { color: inherit; }
-:focus-visible { outline: 2px solid var(--relic); outline-offset: 3px; }
+/* entregables desplegables */
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+details { border: 1px solid var(--line); border-radius: 4px; background: color-mix(in oklab, var(--bg) 70%, transparent); transition: border-color .3s; }
+details[open], details:hover { border-color: var(--accent); }
+summary { list-style: none; cursor: pointer; padding: 22px 24px; display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: start; }
+summary::-webkit-details-marker { display: none; }
+summary b { font: 500 25px/1.15 var(--display); }
+summary span { grid-column: 1; color: var(--muted); font-size: 15px; }
+summary::after { content: "+"; grid-row: 1; grid-column: 2; font-size: 22px; line-height: 1; color: var(--accent); transition: transform .3s; }
+details[open] summary::after { transform: rotate(45deg); }
+details ul { margin: 0; padding: 0 24px 22px 42px; display: grid; gap: 6px; font-size: 15px; color: var(--muted); }
+details ul li::marker { color: var(--accent); }
+details[open] ul { animation: drop .35s ease; }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } }
+.tap { font-size: 13px; color: var(--muted); margin-top: 14px; }
 
-@media (max-width: 860px) {
-  .hero-grid, .gap-grid, .close-grid { grid-template-columns: 1fr; }
-  .hero figure { order: -1; }
-  .locked { grid-template-columns: 1fr; }
-  .deliv, .needs { grid-template-columns: 1fr; }
-  .moves-grid { grid-template-columns: 1fr; gap: 18px; }
-  .timeline li { grid-template-columns: 1fr; }
-  .phase-head { grid-template-columns: 1fr; }
-  .close figure img { max-width: 100%; }
+/* 23 h · la apertura */
+.steps { --prog: 0; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+.steps::before, .steps::after { content: ""; position: absolute; left: 0; top: 7px; height: 1px; }
+.steps::before { right: 0; background: var(--line); }
+.steps::after { width: calc(var(--prog) * 100%); background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+.steps li { position: relative; padding: 32px 14px 0 0; display: grid; gap: 6px; align-content: start; }
+.steps li::before { content: ""; position: absolute; top: 0; left: 0; z-index: 1; width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--accent); background: var(--bg); transition: background .3s, box-shadow .3s; }
+.steps li.on::before { background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+.steps .when { font: 600 12px/1.3 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.steps b { font: 500 23px/1.1 var(--display); }
+.steps span { color: var(--muted); font-size: 14.5px; }
+.fine { margin-top: 28px; font-size: 13.5px; color: var(--muted); }
+
+/* 3 h · cierre */
+.close-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.needs { list-style: none; margin: 0; padding: 0; display: grid; }
+.needs li { padding: 13px 0; border-top: 1px solid var(--line); font-size: 15.5px; display: flex; gap: 12px; }
+.needs li::before { content: ""; flex: none; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; border: 1px solid var(--accent); }
+.invest { padding: 20px 22px; border: 1px solid var(--accent); border-radius: 4px; font-size: 15.5px; }
+.invest b { color: var(--accent); font-weight: 600; }
+footer { padding-block: 30px calc(40px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); font: 300 11px/1 var(--body); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@supports (animation-timeline: view()) {
+  .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+  @keyframes rise { from { opacity: .15; transform: translateY(26px); } }
 }
-@media (max-width: 520px) {
-  body { font-size: 16px; }
-  .wide-img { grid-template-columns: 1fr; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .clock i, .scroll-hint::after, details[open] ul { animation: none !important; }
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .clock small { display: none; }
+  .pair { grid-template-columns: 1fr; gap: 10px; }
+  .pair .arrow { transform: rotate(90deg); width: fit-content; }
+  .cards { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; gap: 26px; padding-left: 30px; }
+  .steps::before, .steps::after { left: 7px; top: 0; width: 1px; }
+  .steps::before { right: auto; bottom: 0; height: auto; }
+  .steps::after { height: calc(var(--prog) * 100%); }
+  .steps li { padding: 0; }
+  .steps li::before { left: -30px; top: 4px; }
+  .close-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+<div class="glow" aria-hidden="true"></div>
+<div class="clock" aria-hidden="true"><i></i><span id="clock">17:00</span><small id="clock-label">Se abren las puertas</small></div>
 
-<div class="pulse-line" aria-hidden="true"></div>
+<header class="hero">
+  <img src="img/portada.jpg" alt="" width="1200" height="1290">
+  <div class="wrap">
+    <p class="eyebrow">Propuesta NEO para MIA</p>
+    <h1>Una noche, de las 17 h <em>a las 3 h.</em></h1>
+    <p class="lead">Así proponemos abrir MIA y mantenerlo lleno, a partir de lo que nos contó Mauricio. Baja y mira cómo avanza la noche.</p>
+    <p class="scroll-hint">Empieza la noche</p>
+  </div>
+</header>
 
 <main>
-  <!-- PORTADA -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-text">
-        <p class="eyebrow">Propuesta · Lanzamiento y operación</p>
-        <h1>Del brief <em>a la noche.</em></h1>
-        <p class="lead">Ya tienen una doctrina clara. Esta propuesta cubre lo que falta para que el 394 Saint-Jacques se viva como la describen: la imagen real, las piezas de marca, la apertura y el contenido de cada mes.</p>
-        <div class="meta">
-          <span>Para <b>Mauricio, Leo y el equipo MIA</b></span>
-          <span>Preparada por <b>NEO</b></span>
-          <span>Noviembre 2026</span>
-        </div>
-      </div>
-      <figure>
-        <img src="img/portada.jpg" alt="Portada del Brand Brief de MIA: escultura de cobre, cortina rosa y el logo MIA" width="1200" height="1290">
-        <figcaption>Brand Brief V1.1 de MIA, portada</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- LO QUE YA TIENEN -->
-  <section>
+  <section class="hour" data-time="17:00" data-label="Lo que nos dijeron" data-heat="0">
     <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">Lo que ya construyeron</p>
-        <h2>No vamos a reinventar a MIA.</h2>
-        <p class="lead muted">Leímos el Brand Brief V1.1 y las respuestas de Mauricio al cuestionario. Lo que el brief marca como bloqueado lo respetamos tal cual y es la base de todo lo que proponemos.</p>
+      <div class="hour-head reveal">
+        <p class="time">17:00</p>
+        <h2>Lo que nos dijeron, y lo que hacemos con eso.</h2>
       </div>
-      <div class="locked">
-        <div><p class="eyebrow">Posicionamiento</p><p class="q">Bar à cocktails nocturne raffiné et supper club</p><p class="muted">Viejo Montreal, inspiración latinoamericana. El cóctel es el centro.</p></div>
-        <div><p class="eyebrow">La noche</p><p class="q">Same MIA. Different temperature.</p><p class="muted">Séduction, Momentum, Célébration. Una sola noche que sube sin cortes.</p></div>
-        <div><p class="eyebrow">Sistema visual</p><p class="q">The pulse must be earned.</p><p class="muted">Dark, Relic, Pulse y Skin. El rosa se reserva para cuando la noche lo pide.</p></div>
-        <div><p class="eyebrow">Las personas</p><p class="q">People are the Pulse.</p><p class="muted">El misterio es del lugar; la calidez, de la gente. Sensual por el comportamiento, nunca por la exposición.</p></div>
-        <div><p class="eyebrow">La voz</p><p class="q">Suggest. Never Explain.</p><p class="muted">Elegante, reducida, evocadora. En francés e inglés.</p></div>
-        <div><p class="eyebrow">Los límites</p><p class="q">Pas Tulum. Pas Vegas. Pas Miami.</p><p class="muted">Sin personaje, sin tema cultural, sin sobrebranding.</p></div>
-      </div>
-      <div class="wide-img">
-        <figure><img src="img/funciones.jpg" alt="Las cuatro funciones de color: Dark, Relic, Pulse y Skin" width="1200" height="830" loading="lazy"><figcaption>Dark · Relic · Pulse · Skin</figcaption></figure>
-        <figure><img src="img/movimientos.jpg" alt="Los tres movimientos de la noche: seducción, momentum y celebración" width="1200" height="630" loading="lazy"><figcaption>Séduction · Momentum · Célébration</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- LO QUE FALTA -->
-  <section>
-    <div class="wrap gap-grid">
-      <div>
-        <div class="head" style="margin-bottom:32px">
-          <p class="eyebrow">Lo que falta</p>
-          <h2>El brief dice cómo se siente MIA. Falta que se vea.</h2>
+      <div class="pairs">
+        <div class="pair reveal">
+          <p class="said">“Que la gente lo venga a descubrir más de lo que nosotros lo presentaremos.”<small>Mauricio · la apertura</small></p>
+          <span class="arrow" aria-hidden="true">→</span>
+          <p class="do"><b>Un teaser que muestra sin explicar.</b><span>Instagram abre con detalles de la sala y la dirección. La fecha llega al final.</span></p>
         </div>
-        <ol class="gaps">
-          <li><b>El tono del Pulse</b><span>El brief lo deja "à développer". Hoy no hay un rosa definido ni reglas de cuánto y cuándo aparece.</span></li>
-          <li><b>La imagen real</b><span>Todas las imágenes del brief son conceptuales. MIA todavía no tiene una sola foto propia de su sala, sus cócteles o su gente.</span></li>
-          <li><b>Las aplicaciones</b><span>Carta, señalética, invitaciones, redes y web. Es lo que el cliente toca y lee cada noche.</span></li>
-          <li><b>El lanzamiento</b><span>Hay una secuencia (soft open, influencer night, opening) pero no un plan de canales, contenido y calendario.</span></li>
-        </ol>
-        <p class="note"><b>El tiempo.</b> "Abrir en un mes" pone el soft open a mediados de diciembre: temporada de fiestas de empresa y, dos semanas después, Nochevieja. Es la mejor ventana posible para abrir y deja muy poco margen. Por eso la Fase 1 empieza por lo que tiene que existir antes de la primera noche.</p>
-      </div>
-      <div>
-        <div class="compare">
-          <figure><span class="tag">Hoy</span><img src="img/local-6.jpg" alt="Foto real del 394 Saint-Jacques en obra: barra larga, techo negro, piso de concreto" width="825" height="1100" loading="lazy"></figure>
-          <figure><span class="tag">Lo que imaginan</span><img src="img/sala-render.jpg" alt="Imagen conceptual de la sala de MIA con barras iluminadas en rosa" width="378" height="500" loading="lazy"></figure>
+        <div class="pair reveal">
+          <p class="said">“Festivo. La gente viene a celebrar la vida.”<small>Mauricio · una palabra</small></p>
+          <span class="arrow" aria-hidden="true">→</span>
+          <p class="do"><b>Grupos de celebración como prioridad.</b><span>Reserva de mesa y botella para cumpleaños y aniversarios, fácil desde el celular.</span></p>
         </div>
-        <figcaption>Del brief: foto real del estado actual y una imagen conceptual. La Fase 1 llena el espacio entre las dos.</figcaption>
+        <div class="pair reveal">
+          <p class="said">“Nunca un lugar de desmadre. Class es importante.”<small>Mauricio · lo que no es MIA</small></p>
+          <span class="arrow" aria-hidden="true">→</span>
+          <p class="do"><b>Foto y video con gente real y elegante.</b><span>Nada de fiesta descontrolada en redes. Se celebra, pero con buena apariencia.</span></p>
+        </div>
+        <div class="pair reveal">
+          <p class="said">“Entre más va en la noche, más rosado aparece.”<small>Mauricio · el ambiente</small></p>
+          <span class="arrow" aria-hidden="true">→</span>
+          <p class="do"><b>El rosa se define y se usa con reglas.</b><span>Un tono exacto y cuándo aparece, igual en la sala, en la carta y en redes.</span></p>
+        </div>
+        <div class="pair reveal">
+          <p class="said">“Internacional, foodie, after work, de 25 a 45 años.”<small>Mauricio · el cliente</small></p>
+          <span class="arrow" aria-hidden="true">→</span>
+          <p class="do"><b>Web y Google en francés e inglés.</b><span>Para el turista del Viejo Montreal y para el after work de los jueves.</span></p>
+        </div>
+        <div class="pair reveal">
+          <p class="said">“Taco &amp; Margarita: siempre está lleno.”<small>Mauricio · referencias</small></p>
+          <span class="arrow" aria-hidden="true">→</span>
+          <p class="do"><b>Contenido cada semana, de jueves a domingo.</b><span>Una razón para volver: DJ, cóctel nuevo y, más adelante, los Mercredis Moomba.</span></p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FILTRO -->
-  <section>
-    <div class="wrap filter">
-      <p class="eyebrow">Cómo trabajamos</p>
-      <p class="big">Cada pieza pasa por su filtro:<br><em>Does this make the night better?</em></p>
-      <p class="lead muted">Y por su jerarquía. Primero que funcione (reservar, pedir, llegar), luego la experiencia, luego la marca y al final la decoración.</p>
-      <div class="hier" aria-label="Jerarquía del brief"><span>Function</span><i>→</i><span>Experience</span><i>→</i><span>Brand</span><i>→</i><span>Decoration</span></div>
-    </div>
-  </section>
-
-  <!-- FASE 1 -->
-  <section id="fase-1">
+  <section class="hour" data-time="20:00" data-label="Antes de abrir" data-heat=".3">
     <div class="wrap">
-      <div class="phase-head">
-        <div class="phase-num">1</div>
-        <div class="stack">
-          <p class="eyebrow">Fase 1 · Lanzamiento · de hoy a la apertura</p>
-          <h2>Que la primera noche ya se vea como MIA.</h2>
-        </div>
+      <div class="hour-head reveal">
+        <p class="time">20:00</p>
+        <p class="eyebrow">Fase 1 · antes de abrir</p>
+        <h2>Lo que tiene que existir antes de la primera noche.</h2>
       </div>
-      <div class="deliv">
-        <div class="item">
-          <h3><small>1.1</small>El Pulse y el kit de marca</h3>
-          <ul>
-            <li>Tono exacto del rosa Pulse, probado en pantalla, impresión y luz de la sala.</li>
-            <li>Reglas de uso: cuánto Pulse en cada movimiento de la noche y dónde nunca aparece.</li>
-            <li>Tipografías definitivas y logo en vector, en todas sus versiones.</li>
-            <li>Guía corta de una página para el equipo y proveedores.</li>
-          </ul>
-          <p class="why">Sin esto, cada proveedor elige su propio rosa y la regla <em>the pulse must be earned</em> se pierde en la primera semana.</p>
-        </div>
-        <div class="item">
-          <h3><small>1.2</small>Piezas para abrir</h3>
-          <ul>
-            <li>Carta de cócteles y comida en FR/EN, impresa y en QR.</li>
-            <li>Señalética esencial: entrada, baños, reservas.</li>
-            <li>Invitaciones para soft open, influencer night y opening.</li>
-            <li>Plantillas de Instagram (posts, stories, reels) listas para usar.</li>
-          </ul>
-          <p class="why">Todo en la voz del brief: sugerir sin explicar, y que pedir y orientarse sea fácil.</p>
-        </div>
-        <div class="item">
-          <h3><small>1.3</small>La primera imagen real</h3>
-          <ul>
-            <li>Sesión de foto y video de la sala terminada: barras, cocina abierta, luz, materiales.</li>
-            <li>Cócteles y platos de la carta, fotografiados en la sala.</li>
-            <li>Cobertura de las primeras noches con gente real, con la regla del brief: la cámara observa la conexión, no la crea.</li>
-          </ul>
-          <p class="why">Reemplaza las imágenes conceptuales por MIA de verdad. Es el material de toda la campaña y de la web.</p>
-        </div>
-        <div class="item">
-          <h3><small>1.4</small>Web MIA en FR/EN</h3>
-          <ul>
-            <li>Reservar, ver la carta, horarios y cómo llegar, en dos toques desde el celular.</li>
-            <li>Francés por defecto e inglés. Sin español, como pide la voz de MIA.</li>
-            <li>Panel simple para que ustedes cambien la carta, los horarios y los eventos.</li>
-          </ul>
-          <p class="why">La web es Function antes que Brand: su trabajo es llenar las mesas.</p>
-        </div>
+      <div class="cards">
+        <details class="reveal">
+          <summary><b>El rosa y la marca lista</b><span>Tono del rosa, logo y tipografías para todo.</span></summary>
+          <ul><li>Tono exacto del rosa, probado en luz, pantalla e impresión.</li><li>Logo en vector y sus versiones.</li><li>Una guía de una página para el equipo y los proveedores.</li></ul>
+        </details>
+        <details class="reveal">
+          <summary><b>Fotos y video reales</b><span>La sala terminada, cócteles y platos.</span></summary>
+          <ul><li>Sesión de la sala: barras, cocina abierta, luz.</li><li>Cócteles y platos de la carta.</li><li>Primeras noches con gente real.</li></ul>
+        </details>
+        <details class="reveal">
+          <summary><b>Carta e invitaciones</b><span>FR/EN, impresa y en QR.</span></summary>
+          <ul><li>Carta de cócteles, comida y botellas.</li><li>Invitaciones para soft open, influencer night y opening.</li><li>Señalética básica y plantillas de Instagram.</li></ul>
+        </details>
+        <details class="reveal">
+          <summary><b>Web MIA</b><span>Reservar, ver la carta y llegar.</span></summary>
+          <ul><li>Francés e inglés, pensada para el celular.</li><li>Reservas de mesa y de grupo.</li><li>Panel para que ustedes cambien la carta y los eventos.</li></ul>
+        </details>
       </div>
-
-      <div class="moves">
-        <div class="head" style="margin-bottom:28px">
-          <p class="eyebrow">1.5 · Campaña de apertura</p>
-          <h3 style="font-size:clamp(30px,4vw,44px)">Suggest. Never Explain. Contada como su propia noche.</h3>
-          <p class="muted">La campaña sigue los tres movimientos del brief. MIA no se presenta: se deja descubrir, como pidió Mauricio.</p>
-        </div>
-        <div class="moves-grid">
-          <div class="m1"><p class="eyebrow">Séduction · teaser</p><p>Piezas que muestran sin explicar: texturas Dark y Relic, una barra, una copa, la dirección sin fecha. Instagram se abre limpio y en silencio.</p></div>
-          <div class="m2"><p class="eyebrow">Momentum · revelación</p><p>Fecha, reservas abiertas y web en línea. Soft open de una semana con lista de invitados y la primera cobertura real.</p></div>
-          <div class="m3"><p class="eyebrow">Célébration · apertura</p><p>Influencer night con una lista elegida con su filtro, activación con Clase Azul y official opening con prensa junto a Leo. Después, fiestas de diciembre y Nochevieja.</p></div>
-        </div>
-      </div>
+      <p class="tap">Toca cada bloque para ver el detalle.</p>
     </div>
   </section>
 
-  <!-- CALENDARIO -->
-  <section id="calendario">
+  <section class="hour" data-time="23:00" data-label="La apertura" data-heat=".65">
     <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">Calendario</p>
-        <h2>Cinco semanas hasta la noche de apertura.</h2>
-        <p class="muted">Fechas estimadas a partir de "abrir en un mes". Se ajustan en cuanto tengan la fecha real.</p>
+      <div class="hour-head reveal">
+        <p class="time">23:00</p>
+        <p class="eyebrow">La apertura</p>
+        <h2>Su plan, con fecha y contenido.</h2>
       </div>
-      <ol class="timeline">
-        <li><p class="when">Semana 1<small>desde el 16 nov</small></p><p><b>Arranque</b><span>Reunión de alcance, recibimos sus archivos, definimos el Pulse y el kit de marca, planeamos la sesión de fotos.</span></p></li>
-        <li><p class="when">Semanas 2–3<small>23 nov – 6 dic</small></p><p><b>Producción y teaser</b><span>Carta, invitaciones, plantillas y web. Empieza el teaser en Instagram. Sesión de fotos en cuanto la sala esté lista.</span></p></li>
-        <li><p class="when">Semana 4<small>7 – 13 dic</small></p><p><b>Revelación</b><span>Fecha anunciada, web y reservas abiertas, invitaciones enviadas.</span></p></li>
-        <li><p class="when">Semana 5<small>~14 – 20 dic</small></p><p><b>Soft open</b><span>Una semana de noches reales con cobertura de foto y video.</span></p></li>
-        <li class="hot"><p class="when">Apertura<small>~21 dic</small></p><p><b>Influencer night y official opening</b><span>Activación Clase Azul, prensa y recap. Campaña de fiestas y Nochevieja.</span></p></li>
-        <li><p class="when">Enero<small>en adelante</small></p><p><b>Empieza la Fase 2</b><span>Operación mensual con el material y el ritmo de la apertura.</span></p></li>
+      <ol class="steps" id="steps">
+        <li><p class="when">Semanas 1–3</p><b>Teaser</b><span>Muestra sin explicar: detalles de la sala y la dirección.</span></li>
+        <li><p class="when">Semana 4</p><b>Revelación</b><span>Fecha, web y reservas abiertas.</span></li>
+        <li><p class="when">~14 dic</p><b>Soft open</b><span>Una semana con invitados y la primera cobertura real.</span></li>
+        <li><p class="when">~18 dic</p><b>Influencer night</b><span>Lista elegida con cuidado. Activación con Clase Azul.</span></li>
+        <li><p class="when">~21 dic</p><b>Opening oficial</b><span>Prensa con Leo. Después, fiestas y Nochevieja.</span></li>
       </ol>
+      <p class="fine">Fechas estimadas desde “abrir en un mes”. Se ajustan a su fecha real.</p>
     </div>
   </section>
 
-  <!-- FASE 2 -->
-  <section id="fase-2">
+  <section class="hour" data-time="01:00" data-label="Cada mes" data-heat=".9">
     <div class="wrap">
-      <div class="phase-head">
-        <div class="phase-num">2</div>
-        <div class="stack">
-          <p class="eyebrow">Fase 2 · Operación mensual · desde enero</p>
-          <h2>Que cada semana haya una razón para volver.</h2>
-        </div>
+      <div class="hour-head reveal">
+        <p class="time">01:00</p>
+        <p class="eyebrow">Fase 2 · desde enero</p>
+        <h2>Cada mes, una razón para volver.</h2>
       </div>
-      <div class="deliv">
-        <div class="item">
-          <h3><small>2.1</small>Contenido de la noche</h3>
-          <ul>
-            <li>Sesiones mensuales de foto y video en noches reales.</li>
-            <li>Publicaciones, reels y stories repartidos en los tres movimientos: más Séduction temprano en la semana, más Célébration el fin de semana.</li>
-            <li>Cócteles nuevos y platos de la carta con su propia pieza.</li>
-          </ul>
-        </div>
-        <div class="item">
-          <h3><small>2.2</small>Redes y comunidad</h3>
-          <ul>
-            <li>Calendario mensual aprobado por ustedes antes de publicar.</li>
-            <li>Respuesta a mensajes y comentarios en la voz de MIA.</li>
-            <li>Make people feel expected también en línea: reconocer a quien vuelve.</li>
-          </ul>
-        </div>
-        <div class="item">
-          <h3><small>2.3</small>Noches y eventos</h3>
-          <ul>
-            <li>Anuncio y cobertura de las noches con DJ.</li>
-            <li>Preparar el regreso de los Mercredis Moomba cuando decidan lanzarlos.</li>
-            <li>Fechas clave: San Valentín, cumpleaños y grupos de celebración.</li>
-          </ul>
-        </div>
-        <div class="item">
-          <h3><small>2.4</small>Web y resultados</h3>
-          <ul>
-            <li>Carta, horarios y eventos siempre al día en la web.</li>
-            <li>Reporte mensual simple: reservas desde la web, alcance, seguidores y qué contenido funcionó.</li>
-          </ul>
-          <p class="why">El volumen exacto (número de sesiones, publicaciones y reels) lo definimos juntos según su presupuesto.</p>
-        </div>
+      <div class="cards">
+        <details class="reveal">
+          <summary><b>Contenido de las noches</b><span>Foto y video de noches reales cada mes.</span></summary>
+          <ul><li>Reels, posts y stories de jueves a domingo.</li><li>Cada cóctel o plato nuevo con su pieza.</li></ul>
+        </details>
+        <details class="reveal">
+          <summary><b>Redes y mensajes</b><span>Calendario aprobado por ustedes.</span></summary>
+          <ul><li>Publicación y respuesta a mensajes en FR/EN.</li><li>Reconocer a quien vuelve.</li></ul>
+        </details>
+        <details class="reveal">
+          <summary><b>Noches y eventos</b><span>DJs, fechas clave y los Mercredis Moomba.</span></summary>
+          <ul><li>Anuncio y cobertura de cada noche con DJ.</li><li>San Valentín, cumpleaños y grupos.</li><li>El regreso de los Mercredis Moomba cuando lo decidan.</li></ul>
+        </details>
+        <details class="reveal">
+          <summary><b>Web y resultados</b><span>Un reporte simple cada mes.</span></summary>
+          <ul><li>Carta y eventos siempre al día.</li><li>Reservas, alcance y qué contenido funcionó.</li></ul>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- NECESITAMOS -->
-  <section>
-    <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">Para arrancar</p>
-        <h2>Lo que necesitamos de ustedes.</h2>
-      </div>
-      <ul class="needs">
-        <li><p>Logo en archivo original<span>Vector (AI, SVG o PDF), si existe.</span></p></li>
-        <li><p>Documento de colores y visuales del local<span>Los que mencionan en WhatsApp.</span></p></li>
-        <li><p>Fecha objetivo del soft open<span>Aunque sea tentativa, ordena todo el calendario.</span></p></li>
-        <li><p>Carta y precios<span>Cócteles, comida y botellas, aunque sea en borrador.</span></p></li>
-        <li><p>Acceso a Instagram y dominio web<span>O los creamos juntos si todavía no existen.</span></p></li>
-        <li><p>Contactos de Clase Azul y prensa<span>Para coordinar la activación y el opening con Leo.</span></p></li>
-        <li><p>Lista de invitados<span>Soft open, influencer night y opening.</span></p></li>
-        <li><p>Presupuesto de marketing<span>Para dimensionar la Fase 2.</span></p></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- CIERRE -->
-  <section class="close">
+  <section class="hour" data-time="03:00" data-label="Siguiente paso" data-heat="1">
     <div class="wrap close-grid">
-      <div class="stack" style="gap:28px">
-        <p class="eyebrow">Siguiente paso</p>
-        <h2>Una reunión para fijar la fecha <em>y encender el Pulse.</em></h2>
-        <p class="lead muted">En 45 minutos validamos el alcance, la fecha de apertura y el volumen mensual. Con eso les presentamos la inversión de cada fase por separado, para que puedan empezar por la Fase 1.</p>
-        <div class="invest" aria-label="Inversión">
-          <p class="eyebrow">Inversión</p>
-          <div class="row"><span>Fase 1 · Lanzamiento</span><span>Se presenta en la reunión</span></div>
-          <div class="row"><span>Fase 2 · Operación mensual</span><span>Según el volumen elegido</span></div>
-        </div>
+      <div class="hour-head reveal" style="margin:0">
+        <p class="time">03:00</p>
+        <h2>Una reunión de 45 minutos <em>y empezamos.</em></h2>
+        <p class="muted">Fijamos la fecha, el alcance y cuánto contenido al mes.</p>
+        <p class="invest"><b>Inversión:</b> se presenta en la reunión, por fase, para empezar por la Fase 1.</p>
       </div>
-      <figure><img src="img/coctel.jpg" alt="Mano sosteniendo una copa de cóctel rosa con luz cálida" width="378" height="500" loading="lazy"></figure>
+      <div class="reveal">
+        <p class="eyebrow" style="margin-bottom:10px">Para arrancar nos falta</p>
+        <ul class="needs">
+          <li>Fecha tentativa del soft open</li>
+          <li>Logo en archivo y documento de colores</li>
+          <li>Carta y precios: cócteles, comida y botellas</li>
+          <li>Accesos de Instagram y del dominio</li>
+          <li>Presupuesto de marketing</li>
+        </ul>
+      </div>
     </div>
   </section>
 </main>
 
-<div class="wrap"><footer><span>Propuesta para MIA · 394 Saint-Jacques</span><span>Powered by NEO</span></footer></div>
+<div class="wrap"><footer><span>MIA · 394 Saint-Jacques</span><span>Powered by NEO</span></footer></div>
 
 <script>
 (() => {
   const root = document.documentElement;
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { root.style.setProperty("--p", "0.6"); return; }
+  const clock = document.getElementById("clock");
+  const label = document.getElementById("clock-label");
+  const steps = document.getElementById("steps");
+  const items = [...steps.querySelectorAll("li")];
+  const toMin = (t) => { let [h, m] = t.split(":").map(Number); if (h < 12) h += 24; return h * 60 + m; };
+  const fmt = (min) => { const h = Math.floor(min / 60) % 24, m = Math.floor((min % 60) / 15) * 15; return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0"); };
+  const stops = [...document.querySelectorAll(".hour")].map((el) => ({ el, min: toMin(el.dataset.time), heat: +el.dataset.heat, label: el.dataset.label }));
   let raf = 0;
-  const update = () => {
+  function update() {
     raf = 0;
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const p = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
-    root.style.setProperty("--p", (p * p).toFixed(3));
-  };
+    const y = scrollY + innerHeight * 0.45;
+    let a = { min: toMin("17:00"), heat: 0, label: "Se abren las puertas", top: 0 }, b = null;
+    for (const s of stops) {
+      const top = s.el.getBoundingClientRect().top + scrollY;
+      if (top <= y) a = { ...s, top }; else { b = { ...s, top }; break; }
+    }
+    const k = b ? Math.min(1, Math.max(0, (y - a.top) / (b.top - a.top || 1))) : 0;
+    const min = b ? a.min + (b.min - a.min) * k : a.min;
+    const heat = b ? a.heat + (b.heat - a.heat) * k : a.heat;
+    root.style.setProperty("--heat", heat.toFixed(3));
+    clock.textContent = fmt(min);
+    label.textContent = a.label;
+    const r = steps.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (innerHeight * 0.7 - r.top) / r.height));
+    steps.style.setProperty("--prog", p.toFixed(3));
+    items.forEach((li, i) => li.classList.toggle("on", p >= i / (items.length - 1) - 0.02));
+  }
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
   addEventListener("resize", update);
   update();
